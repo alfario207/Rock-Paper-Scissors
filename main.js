@@ -1,76 +1,100 @@
+const btn = document.querySelectorAll('.btn-pilihan')
+const rock = document.getElementById('Rock')
+const paper = document.getElementById('Paper')
+const scissors = document.getElementById('Scissors')
+const restart = document.getElementById('Restart')
+
 function getComputerChoice() {
     let randomNumber = Math.random()
 
     if (randomNumber < 0.33) {
-        return 'batu'
+        return 'Rock'
     } else if (randomNumber < 0.66) {
-        return 'kertas'
+        return 'Paper'
     } else {
-        return 'gunting'
+        return 'Scissors'
     }
-}
-
-function getHumanChoice() {
-    let userInput = prompt('Masukkan Pilihanmu : ')
-    return userInput
 }
 
 let humanScore = 0
 let computerScore = 0
+const game = document.querySelector('#game')
 
 function playRound(humanChoice, computerChoice) {
-    let human = humanChoice.toLowerCase()
+    let human = humanChoice
     let computer = computerChoice
 
     if (human === computer) {
-        alert(`Seri! Keduanya memilih ${human}`)
+        game.textContent = `Draw! both chose ${human}` 
     } else if (
-        (human === 'batu' && computer === 'gunting') || 
-        (human === 'kertas' && computer === 'batu') || 
-        (human === 'gunting' && computer === 'kertas')
+        (human === 'Rock' && computer === 'Scissors') || 
+        (human === 'Paper' && computer === 'Rock') || 
+        (human === 'Scissors' && computer === 'Paper')
     ) {
-        alert(`
-            Kamu Menang!
-            kamu memilih ${human}, komputer memilih ${computer}
-            ${human} mengalahkan ${computer}
-        `)
+        game.textContent = `You Win! 
+        You chooose ${human}, Computer choose ${computer}
+        ${human} beats ${computer}`
+        
         humanScore++
     } else {
-        alert(`
-            Kamu Kalah!
-            kamu memilih ${human}, komputer memilih ${computer}
-            ${computer} mengalahkan ${human}    
-        `)
+        game.textContent = `You lost! 
+        You choose ${human}, Computer choose ${computer}
+        ${computer} beats ${human}`
+        
         computerScore++
     }
 }
 
-function playGame() {
-    const round = 10
+const human = document.querySelector('#human')
+human.textContent = `You: ${humanScore}`
 
-    for (let i = 0; i < round; i++) {
-        let gameHumanChoice = getHumanChoice()
+const computer = document.querySelector('#computer')
+computer.textContent = `Computer: ${computerScore}`
+
+btn.forEach(e => {
+    e.addEventListener('click', () => { 
+
+        if (humanScore === 10 || computerScore === 10) return
+
+        console.log(e.id)
+        let gameHumanChoice = e.id
         let gameComputerChoice = getComputerChoice()
-        playRound(gameHumanChoice, gameComputerChoice)
-    }
+        playRound(gameHumanChoice, gameComputerChoice) 
+          
+        console.log('human score', humanScore)
+        console.log('computer score', computerScore)
+        console.log('DISABLE', btn.disabled)
+        
+        human.textContent = `Player: ${humanScore}`
+        computer.textContent = `Computer: ${computerScore}`
 
-    alert(`
-        SKOR AKHIR
-        kamu : ${humanScore}
-        komputer : ${computerScore}
-    `)
-}
+        if (humanScore === 10 || computerScore === 10) {
 
-alert('GAME DIMULAI')
+            btn.forEach(button => button.disabled = true)
 
-playGame()
+            restart.classList.remove('hidden')
+            
+            if (humanScore === 10 && computerScore === 10) {
+                game.textContent = 'Final result is a Draw!'
+            } else if (humanScore === 10) {
+                game.textContent = 'Congratulations!!! You win🎉'
+            } else {
+                game.textContent = 'Yeah!!! You lost the computer wins. Try again'
+            }
+        }
+    })
+});
 
-if (humanScore > computerScore) {
-    alert('Selamat!!! kamu menang🎉')
-} else if (computerScore > humanScore) {
-    alert('Yahh!!! kamu kalah. Coba lagi🤖')
-} else {
-    alert('Hasil akhir Seri!!!')
-}
+restart.addEventListener('click', () => {
+    humanScore = 0 
+    computerScore = 0 
 
-alert('GAME BERAKHIR')
+    human.textContent = `Player: ${humanScore}`
+    computer.textContent = `Computer: ${computerScore}`
+
+    game.textContent = ''
+
+    btn.forEach(button => button.disabled = false)
+
+    restart.classList.add('hidden')
+})
