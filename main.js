@@ -1,18 +1,18 @@
 const btn = document.querySelectorAll('.btn-pilihan')
-const rock = document.getElementById('Rock')
-const paper = document.getElementById('Paper')
-const scissors = document.getElementById('Scissors')
+// const rock = document.getElementById('Rock')
+// const paper = document.getElementById('Paper')
+// const scissors = document.getElementById('Scissors')
 const restart = document.getElementById('Restart')
 
 function getComputerChoice() {
     let randomNumber = Math.random()
 
     if (randomNumber < 0.33) {
-        return 'Rock'
+        return 'rock'
     } else if (randomNumber < 0.66) {
-        return 'Paper'
+        return 'paper'
     } else {
-        return 'Scissors'
+        return 'scissors'
     }
 }
 
@@ -27,9 +27,9 @@ function playRound(humanChoice, computerChoice) {
     if (human === computer) {
         game.textContent = `Draw! both chose ${human}` 
     } else if (
-        (human === 'Rock' && computer === 'Scissors') || 
-        (human === 'Paper' && computer === 'Rock') || 
-        (human === 'Scissors' && computer === 'Paper')
+        (human === 'rock' && computer === 'scissors') || 
+        (human === 'paper' && computer === 'rock') || 
+        (human === 'scissors' && computer === 'paper')
     ) {
         game.textContent = `You Win! 
         You chooose ${human}, Computer choose ${computer}
