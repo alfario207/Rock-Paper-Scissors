@@ -8,11 +8,11 @@ function getComputerChoice() {
     let randomNumber = Math.random()
 
     if (randomNumber < 0.33) {
-        return 'rock'
+        return '✊'
     } else if (randomNumber < 0.66) {
-        return 'paper'
+        return '✋'
     } else {
-        return 'scissors'
+        return '✌️'
     }
 }
 
@@ -27,9 +27,9 @@ function playRound(humanChoice, computerChoice) {
     if (human === computer) {
         game.textContent = `Draw! both chose ${human}` 
     } else if (
-        (human === 'rock' && computer === 'scissors') || 
-        (human === 'paper' && computer === 'rock') || 
-        (human === 'scissors' && computer === 'paper')
+        (human === '✊' && computer === '✌️') || 
+        (human === '✋' && computer === '✊') || 
+        (human === '✌️' && computer === '✋')
     ) {
         game.textContent = `You Win! 
         You chooose ${human}, Computer choose ${computer}
